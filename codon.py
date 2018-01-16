@@ -4,7 +4,7 @@ senseDNA = ""
 mRNA = []
 tRNA = []
 
-#SET 1: Working from DNA Sequence
+#SET 1: Working from DNA Antisense Sequence
 def transcribeDNA(strDNA):
     str_mRNA = ""
     for nucleotide in strDNA:
@@ -130,13 +130,11 @@ def printCodons(strDNA):
     tempArr = []
     presentCodon = ""
     boolean = False
-    i = 0
     while boolean is False:
         startCodon = tempStr[0] + tempStr[1] + tempStr[2]
         if(startCodon == 'AUG'):
             boolean = True
         else:
-            i += 1
             tempStr = tempStr[1:]
     while len(tempStr) >= 3:
         tempArr.append("" + tempStr[0] + tempStr[1] + tempStr[2])
@@ -168,7 +166,62 @@ def printAntiCodons(strDNA):
         presentAntiCodon = presentAntiCodon + antiCodon + "-"    
     return(presentAntiCodon)     
 
-#SET 2: Working from mRNA
+#SET 2: Working from Sense Strand
+def sense_to_Antisense(strSense):
+    antiSense = ""
+    for nucleotide in strSense:
+        if(nucleotide == 'A'):
+            antisense = antisense + 'T'
+        elif(nucleotide == 'T'):
+            antisense = antisense + 'A' 
+        elif(nucleotide == 'G'):
+            antisense = antisense + 'C'
+        elif(nucleotide == 'C'):
+            antisense = antisense + 'G'                                     
+def sense_to_mRNA(strSense):
+    mRNA_Str = ""
+    for(nucleotide in strSense):
+        if(nucleotide == 'T'):
+            mRNA_Str = mRNA_Str + 'U'
+        else:
+            mRNA_Str = mRNA_Str + nucleotide
+    return(mRNA_Str)
+def sense_to_Codons(strSense):
+    tempStr = sense_to_mRNA(strSense)
+    boolean = False
+    while boolean is False:
+        startCodon = tempStr[0] + tempStr[1] + tempStr[2]
+        if startCodon == "AUG":
+            boolean = True
+        else:
+            tempStr = tempStr[1:]
+    while len(tempStr) >= 3:
+        tempArr.append("" + tempStr[0] + tempStr[1] + tempStr[2])
+        tempStr = tempStr[3:]
+    return(tempArr)
+def sense_to_Anticodons(strSense):
+    tempStr = ""
+    tempArr = []
+    for nucleotide in strSense:
+        if(nucleotide == "T"):
+            str_mRNA = str_mRNA + "A"
+        elif(nucleotide == "A"):
+            str_mRNA = str_mRNA + "U"
+        elif(nucleotide == "C"):
+            str_mRNA = str_mRNA + "G"
+        elif(nucleotide == "G"):
+            str_mRNA = str_mRNA + "C"
+    while boolean is False:
+        startCodon = tempStr[0] + tempStr[1] + tempStr[2]
+        if(startCodon == 'UAC'):
+            boolean = True
+        else:
+            tempStr = tempStr[1:]
+    while len(tempStr) >= 3:
+        tempArr.append((tempStr[0] + tempStr[1] + tempStr[2]))
+        tempStr = tempStr[3:]
+    return(tempArr)
+
 def mRNA_to_Antisense(strMrna):
     dna_seq = ""
     for ribonucleotide in strMrna:
