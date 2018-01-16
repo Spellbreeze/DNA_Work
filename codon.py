@@ -1,9 +1,10 @@
-strDNA = "actcctcatgcggcaaggtttcattcatctgtcattcgcctgagcgaggagacaccgacccccttgtagatgcgtacgggtgcatgcgcccagacgtatcgtgctcctgtgctccgttctaacagggcccagtttctaaacaagatctctattactcctttgggcgtgtgatacgtacaggttccgaaaagactagtgaccgtcggtaggtaatagcactcaggaccgtaatcagtggcgacaagaccatggacgggagtgatttctagaagacctttacaacaaatagtgacgggtatgtgtgaacattaaatttgtagctaaaccatgttctatcaccaaattcttggtgctttaattgtaagctttaaatggaggtttataaaacaggccggactgtgtaagaagcagttcatcgagctaacaatcgggactaatccccgttgacccagcccctggtgcctccccgagcgttctgctgtaaaataacgcacgacaaaccaaccttcccgccgggcttaatcgactataattgacgctagccgatgaatgcgtaaaatctagcactctttcgggttcaagctcgctcagcgccgatagacgcaacattcgccgccggccattgacttaatctatatgctgtcgacgcgcttctctccagctccgaaagaggaatgcggaattggggagccggggctaagtacaagatctctggctctcgtcagaaaagccatctgacccaagagagacctctacatgcattgggaagaacactgagaccgttctcaggcgagcagaaatgtagaaagtttttcatgggacttccatgcgagggtgctcaattggatacggcacattattaaaccgtgaaacagccgagtcgaggacagattaagggggaaattggactaggcgcacacattgtcccatggaacattagcatcttagagcgtatgattgcgagcgtatttttaaccgttcgtgttttttggaggcctagtg"
+strDNA = "ggtacctcgcgggtcatact"
 strDNA = strDNA.upper()
 senseDNA = ""
 mRNA = []
 tRNA = []
 
+#SET 1: Working from DNA Sequence
 def transcribeDNA(strDNA):
     str_mRNA = ""
     for nucleotide in strDNA:
@@ -22,7 +23,7 @@ def mRNA__Transcripted_Codons(strDNA):
     tempArr = []
     presentCodon = ""
     boolean = False
-    while boolean is not True:
+    while boolean is False:
         startCodon = tempStr[0] + tempStr[1] + tempStr[2]
         if(startCodon == 'AUG'):
             boolean = True
@@ -129,17 +130,20 @@ def printCodons(strDNA):
     tempArr = []
     presentCodon = ""
     boolean = False
-    while boolean is not True:
+    i = 0
+    while boolean is False:
         startCodon = tempStr[0] + tempStr[1] + tempStr[2]
         if(startCodon == 'AUG'):
             boolean = True
         else:
+            i += 1
             tempStr = tempStr[1:]
     while len(tempStr) >= 3:
         tempArr.append("" + tempStr[0] + tempStr[1] + tempStr[2])
         tempStr = tempStr[3:]
     for codon in tempArr:
         presentCodon = presentCodon + codon + "-"
+    print(i)
     return(presentCodon)
 def printAntiCodons(strDNA):
     tempStr = ""
@@ -151,7 +155,7 @@ def printAntiCodons(strDNA):
         else:
             tempStr = tempStr + nucleotide
     boolean = False
-    while boolean is False and len(tempStr) >= 3:
+    while boolean is False:
         startCodon = tempStr[0] + tempStr[1] + tempStr[2]
         if(startCodon == 'UAC'):
             boolean = True
@@ -162,7 +166,21 @@ def printAntiCodons(strDNA):
         tempStr = tempStr[3:]
     for antiCodon in tempArr:
         presentAntiCodon = presentAntiCodon + antiCodon + "-"    
-    return(presentAntiCodon)        
+    return(presentAntiCodon)     
+
+#SET 2: Working from mRNA
+def mRNA_to_Antisense(strMrna):
+    dna_seq = ""
+    for ribonucleotide in strMrna:
+        if(ribonucleotide == 'U'):
+            dna_seq = dna_seq + 'A'
+        elif(ribonucleotide == 'A'):
+            dna_seq = dna_seq + 'T' 
+        elif(ribonucleotide == 'C'):
+            dna_seq = dna_seq + 'G'
+        elif(ribonucleotide == 'G'):
+            dna_seq = dna_seq + 'C'
+    return(dna_seq)
 def mRNA_to_AminoAcids(strMrna):
     #AminoAcid Codon Table Below:
     Phe = ['UUU', 'UUC']
